@@ -244,5 +244,38 @@
    * Initiate Pure Counter 
    */
   new PureCounter();
+  
+  //** toggle code */
+  const storageKey = 'theme-preference';
+            const checkbox = document.getElementById('theme-switch');
+            const apply = (isDark) => {
+                document.body.classList.toggle('dark-mode', isDark);
+                // keep checkbox state synced
+                if(checkbox) checkbox.checked = !!isDark;
+            };
+
+            // Initialize from localStorage or match media
+            let pref = localStorage.getItem(storageKey);
+            if(pref === null){
+                // no saved pref: use system preference
+                pref = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            apply(pref === 'dark');
+
+            // Listen for user toggle
+            if(checkbox){
+                checkbox.addEventListener('change', function(){
+                    const isDark = !!this.checked;
+                    apply(isDark);
+                    localStorage.setItem(storageKey, isDark ? 'dark' : 'light');
+                });
+            }
+
+            // Optional: respond to system changes when user hasn't saved a preference
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', e => {
+                if(!localStorage.getItem(storageKey)){
+                    apply(e.matches);
+                }
+            });
 
 })()
