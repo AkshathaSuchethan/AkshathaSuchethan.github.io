@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medlogics — Doctor Appointment Booking App | Akshatha Suchethan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#F6F8F7;
+    --surface:#FFFFFF;
+    --ink:#16233A;
+    --ink-muted:#5B6B7C;
+    --teal:#0F6E6A;
+    --teal-deep:#0B5652;
+    --gold:#B8862E;
+    --line:#D7DED9;
+    --line-strong:#C7D2CD;
+    --radius: 3px;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,blockquote{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    margin:0;
+    color:var(--ink);
+  }
+
+  a{color:var(--teal-deep);}
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:96px 0 64px;
+    border-bottom:1px solid var(--line-strong);
+    opacity:0;
+    animation: rise 0.7s ease-out forwards;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero{animation:none; opacity:1;}
+  }
+
+  .hero .kicker{
+    font-size:14px;
+    color:var(--teal-deep);
+    font-weight:600;
+    margin-bottom:18px;
+  }
+
+  .hero h1{
+    font-size:clamp(40px, 6vw, 64px);
+    line-height:1.05;
+    max-width:14ch;
+    letter-spacing:-0.01em;
+  }
+
+  .hero .sub{
+    margin-top:22px;
+    max-width:62ch;
+    font-size:19px;
+    color:var(--ink-muted);
+  }
+
+  .meta-row{
+    margin-top:48px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border-top:1px solid var(--line-strong);
+  }
+  .meta-item{
+    padding:18px 20px 0 0;
+    border-right:1px solid var(--line-strong);
+  }
+  .meta-item:last-child{border-right:none;}
+  .meta-item .label{
+    font-size:13px;
+    color:var(--ink-muted);
+    margin-bottom:6px;
+  }
+  .meta-item .value{
+    font-size:15px;
+    font-weight:500;
+  }
+
+  @media (max-width:720px){
+    .meta-row{grid-template-columns:repeat(2, 1fr); row-gap:20px;}
+    .meta-item:nth-child(2n){border-right:none;}
+  }
+
+  /* ---------- Sections ---------- */
+  section{
+    padding:80px 0;
+    border-bottom:1px solid var(--line-strong);
+  }
+  section:last-of-type{border-bottom:none;}
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:18px;
+    margin-bottom:40px;
+  }
+  .section-num{
+    font-family:'Newsreader', serif;
+    font-size:15px;
+    color:var(--teal);
+    border:1px solid var(--teal);
+    border-radius:50%;
+    width:28px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .section-head h2{
+    font-size:30px;
+  }
+
+  .prose p{margin:0 0 18px; max-width:68ch;}
+  .prose p:last-child{margin-bottom:0;}
+
+  /* two column: rationale beside artifact */
+  .split{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:56px;
+    align-items:start;
+  }
+  .split.reverse{
+    grid-template-columns:0.9fr 1.1fr;
+  }
+  .split.reverse .artifact{order:-1;}
+  @media (max-width:860px){
+    .split, .split.reverse{grid-template-columns:1fr;}
+    .split.reverse .artifact{order:0;}
+  }
+
+  /* ---------- Blueprint artifact panels ---------- */
+  .artifact{
+    background:var(--surface);
+    border:1px solid var(--line-strong);
+    padding:28px;
+    position:relative;
+  }
+  .artifact-label{
+    font-size:12.5px;
+    color:var(--ink-muted);
+    margin-bottom:18px;
+  }
+
+  .frame{
+    border:1px dashed var(--line-strong);
+    padding:16px;
+    background:
+      linear-gradient(var(--canvas) 1px, transparent 1px) 0 0/100% 24px;
+    background-color: #FCFDFC;
+  }
+
+  .bp-bar{
+    height:10px;
+    background:var(--line-strong);
+    border-radius:2px;
+    margin-bottom:10px;
+  }
+  .bp-bar.accent{background:var(--teal); opacity:0.75;}
+  .bp-bar.gold{background:var(--gold); opacity:0.6;}
+  .bp-bar.w60{width:60%;}
+  .bp-bar.w40{width:40%;}
+  .bp-bar.w80{width:80%;}
+  .bp-bar.w30{width:30%;}
+
+  .bp-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .bp-row:last-child{border-bottom:none;}
+  .bp-dot{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:1.5px solid var(--teal);
+    flex-shrink:0;
+  }
+  .bp-lines{flex:1;}
+
+  .bp-chip{
+    display:inline-block;
+    font-size:11.5px;
+    color:var(--teal-deep);
+    border:1px solid var(--teal);
+    padding:4px 10px;
+    border-radius:20px;
+    margin:0 8px 8px 0;
+  }
+
+  .flow-track{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:18px;
+  }
+  .flow-step{
+    flex:1;
+    border:1px solid var(--line-strong);
+    background:#FCFDFC;
+    padding:14px 10px;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--ink-muted);
+  }
+  .flow-arrow{
+    color:var(--line-strong);
+    font-size:16px;
+  }
+
+  .swatch-row{
+    display:flex;
+    gap:10px;
+    margin-top:14px;
+  }
+  .swatch{
+    width:36px;
+    height:36px;
+    border:1px solid var(--line-strong);
+  }
+
+  /* ---------- Table ---------- */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:8px;
+  }
+  th, td{
+    text-align:left;
+    padding:16px 18px;
+    border-bottom:1px solid var(--line-strong);
+    vertical-align:top;
+  }
+  th{
+    font-size:13px;
+    color:var(--ink-muted);
+    font-weight:500;
+  }
+  td{font-size:15px;}
+  td.num{
+    font-family:'Newsreader', serif;
+    font-size:20px;
+    color:var(--teal-deep);
+    width:44px;
+  }
+  td.strong{font-weight:600;}
+
+  /* ---------- Findings ---------- */
+  .findings-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+  }
+  @media (max-width:720px){
+    .findings-grid{grid-template-columns:1fr;}
+  }
+  .findings-grid h3{
+    font-size:19px;
+    margin-bottom:18px;
+  }
+  .findings-grid ol{
+    margin:0;
+    padding:0;
+    list-style:none;
+    counter-reset:f;
+  }
+  .findings-grid li{
+    counter-increment:f;
+    display:flex;
+    gap:14px;
+    padding:14px 0;
+    border-top:1px solid var(--line-strong);
+    font-size:15.5px;
+  }
+  .findings-grid li::before{
+    content:counter(f);
+    font-family:'Newsreader', serif;
+    color:var(--teal);
+    flex-shrink:0;
+  }
+
+  /* ---------- Refine comparison ---------- */
+  .compare{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:8px;
+  }
+  @media (max-width:720px){
+    .compare{grid-template-columns:1fr;}
+  }
+  .compare .artifact-label{color:var(--ink-muted);}
+
+  /* ---------- Quote ---------- */
+  .quote-block{
+    border-left:2px solid var(--gold);
+    padding-left:28px;
+    margin:8px 0 32px;
+  }
+  .quote-block blockquote{
+    font-size:24px;
+    font-style:italic;
+    line-height:1.45;
+    max-width:52ch;
+  }
+  .quote-block .attribution{
+    margin-top:14px;
+    font-size:13.5px;
+    color:var(--ink-muted);
+    font-family:'IBM Plex Sans', sans-serif;
+  }
+
+  .next-steps{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  .next-steps li{
+    padding:16px 0;
+    border-top:1px solid var(--line-strong);
+    display:flex;
+    gap:16px;
+    font-size:15.5px;
+    max-width:70ch;
+  }
+  .next-steps li::before{
+    content:"—";
+    color:var(--teal);
+    flex-shrink:0;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:56px 0 80px;
+  }
+  footer .foot-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  footer .name{
+    font-family:'Newsreader', serif;
+    font-size:20px;
+  }
+  footer .links a{
+    color:var(--ink-muted);
+    text-decoration:none;
+    margin-left:22px;
+    font-size:14.5px;
+  }
+  footer .links a:hover{color:var(--teal-deep);}
+  footer .links a:first-child{margin-left:0;}
+
+  ::selection{
+    background: var(--teal);
+    color:#fff;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Case Study</div>
+    <h1>Medlogics — booking a doctor without the hold music</h1>
+    <p class="sub">A healthcare scheduling platform that lets patients search, compare, and book appointments in a few taps — replacing phone queues with a self-service flow built to hold up under real accessibility constraints, not just usability ones.</p>
+
+    <div class="meta-row">
+      <div class="meta-item">
+        <div class="label">Role</div>
+        <div class="value">Lead UX/UI Designer, end-to-end</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Duration</div>
+        <div class="value">May 2022 – March 2023</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Focus</div>
+        <div class="value">Research, IA, interaction design, a11y</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Standard</div>
+        <div class="value">WCAG 2.2 AA</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- Problem & Goal -->
+  <section id="overview">
+    <div class="section-head">
+      <span class="section-num">1</span>
+      <h2>The problem, and the goal</h2>
+    </div>
+    <div class="split">
+      <div class="prose">
+        <p>Booking a doctor's appointment is still, for many patients, a high-friction task: long hold times, no visibility into real-time availability, and no self-service way to cancel or reschedule around a busy, unpredictable day. For working adults with caregiving responsibilities, that friction isn't just an inconvenience — it's a barrier to timely care.</p>
+        <p>The goal was to give patients a fast, trustworthy way to find the right doctor by specialty, symptom, or location; check real-time availability; and book, reschedule, or cancel an appointment in under two minutes — while making sure the experience held up for patients who rely on screen readers, keyboard navigation, or reduced-motion settings.</p>
+      </div>
+      <div class="artifact">
+        <div class="artifact-label">Old path vs. new path</div>
+        <div class="frame">
+          <div class="bp-row"><div class="bp-dot"></div><div class="bp-lines"><div class="bp-bar w80"></div><div class="bp-bar w40"></div></div></div>
+          <div class="bp-row"><div class="bp-dot"></div><div class="bp-lines"><div class="bp-bar w60"></div><div class="bp-bar w30"></div></div></div>
+          <div class="bp-row"><div class="bp-dot"></div><div class="bp-lines"><div class="bp-bar accent w80"></div><div class="bp-bar w40"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Understanding the User -->
+  <section id="research">
+    <div class="section-head">
+      <span class="section-num">2</span>
+      <h2>Understanding the user</h2>
+    </div>
+    <div class="split reverse">
+      <div class="artifact">
+        <div class="artifact-label">Persona — Saanvi</div>
+        <div class="frame">
+          <div class="bp-bar w40"></div>
+          <div class="bp-bar w60"></div>
+          <p style="font-size:13.5px; color:var(--ink-muted); margin-top:14px; margin-bottom:0;">A working parent with no time to wait in queue for care. Every added step between "I need a doctor" and "appointment confirmed" was a point of drop-off.</p>
+        </div>
+      </div>
+      <div class="prose">
+        <p>I conducted interviews and built empathy maps with working adults managing packed schedules — an audience whose needs are a useful proxy for how any time-constrained user interacts with a booking flow. Research surfaced three consistent pain points beyond "booking is slow."</p>
+      </div>
+    </div>
+
+    <table style="margin-top:56px;">
+      <thead>
+        <tr><th style="width:44px;"></th><th>Pain point</th><th>Insight</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td class="strong">Time</td>
+          <td>Users had no tolerance for queueing — digital or physical — and expected real-time slot visibility, not a request-and-wait model.</td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td class="strong">Trust &amp; accessibility of information</td>
+          <td>Patients struggled to evaluate doctors without credentials, reviews, or clear specialty match surfaced up front.</td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td class="strong">Flexibility</td>
+          <td>No self-service path existed to cancel or reschedule during emergencies, forcing users back to a phone call.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Design System -->
+  <section id="system">
+    <div class="section-head">
+      <span class="section-num">3</span>
+      <h2>Design system &amp; foundations</h2>
+    </div>
+    <div class="split">
+      <div class="prose">
+        <p>Rather than designing screens in isolation, I built a small component library alongside the flows — the piece of this project I now treat as the most reusable asset.</p>
+        <p><strong>Design tokens</strong> for color, spacing, and type scale kept contrast ratios and touch-target sizing consistent across every screen without manual rechecking. <strong>Reusable components</strong> — dropdowns, progress indicators, doctor cards, availability slots — were documented with default, hover, disabled, and error states for clean developer handoff.</p>
+        <p>This system-first approach meant that when usability testing surfaced the need for a new "recurring appointment" option, it could be built from existing components rather than a one-off screen.</p>
+      </div>
+      <div class="artifact">
+        <div class="artifact-label">Token &amp; component set</div>
+        <div class="frame">
+          <div class="swatch-row">
+            <div class="swatch" style="background:var(--teal);"></div>
+            <div class="swatch" style="background:var(--teal-deep);"></div>
+            <div class="swatch" style="background:var(--gold);"></div>
+            <div class="swatch" style="background:var(--line-strong);"></div>
+            <div class="swatch" style="background:var(--ink);"></div>
+          </div>
+          <div style="margin-top:18px;">
+            <span class="bp-chip">Dropdown</span>
+            <span class="bp-chip">Progress indicator</span>
+            <span class="bp-chip">Doctor card</span>
+            <span class="bp-chip">Availability slot</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wireframe to Prototype -->
+  <section id="prototype">
+    <div class="section-head">
+      <span class="section-num">4</span>
+      <h2>From wireframe to prototype</h2>
+    </div>
+    <div class="prose">
+      <p>Paper wireframes let me test the core booking logic — location, consultation type, doctor selection — before any visual design work began. Digital wireframes carried that structure forward, with two decisions shaped directly by research: a <strong>location and consultation-type dropdown</strong> surfaced early in the flow, so users could filter before browsing doctors rather than after, and a <strong>progress indicator</strong> giving users a clear sense of how close they were to a confirmed booking.</p>
+    </div>
+    <div class="artifact" style="margin-top:32px;">
+      <div class="artifact-label">Primary flow — low-fidelity prototype</div>
+      <div class="flow-track">
+        <div class="flow-step">Location</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Consultation type</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Doctor selection</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Booking</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Usability Testing -->
+  <section id="testing">
+    <div class="section-head">
+      <span class="section-num">5</span>
+      <h2>Usability testing</h2>
+    </div>
+    <div class="prose" style="margin-bottom:40px;">
+      <p>I ran two rounds of moderated usability testing, each closing a distinct gap.</p>
+    </div>
+    <div class="findings-grid">
+      <div>
+        <h3>Round 1 findings</h3>
+        <ol>
+          <li>Users wanted to book an appointment in fewer steps.</li>
+          <li>Users wanted more customization in how they filtered doctors.</li>
+          <li>Users wanted doctor reviews visible before booking.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Round 2 findings</h3>
+        <ol>
+          <li>Users still couldn't fully customize an appointment — care type, consultation type, and location together.</li>
+          <li>Users wanted the option to save and repeat a previous booking — a recurring-appointment pattern.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Refining the Design -->
+  <section id="refine">
+    <div class="section-head">
+      <span class="section-num">6</span>
+      <h2>Refining the design</h2>
+    </div>
+    <div class="prose" style="margin-bottom:32px;">
+      <p><strong>Customization:</strong> after Round 1, I surfaced location, care type, and consultation type together on first load, rather than sequentially — cutting the number of screens needed to reach doctor selection. <strong>Trust signals:</strong> after Round 2, I added a doctor detail screen — credentials, specialty, and patient reviews — inserted before the booking confirmation step, so users could evaluate fit without leaving the flow.</p>
+    </div>
+    <div class="compare">
+      <div class="artifact">
+        <div class="artifact-label">Before — sequential filters</div>
+        <div class="frame">
+          <div class="bp-bar w40"></div>
+          <div class="bp-bar w40"></div>
+          <div class="bp-bar w40"></div>
+        </div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-label">After — combined on first load</div>
+        <div class="frame">
+          <div class="bp-bar accent w80"></div>
+        </div>
+      </div>
+    </div>
+    <div class="prose" style="margin-top:40px;">
+      <p><strong>Accessibility pass:</strong> every revised screen was checked against WCAG 2.2 AA — color contrast, focus order, and screen-reader labeling on icon-only actions like bookmarking — rather than treated as a final-stage audit. Detailed doctor imagery included descriptive alt text, and the booking flow was fully operable via keyboard alone.</p>
+    </div>
+  </section>
+
+  <!-- High-Fidelity Prototype -->
+  <section id="hifi">
+    <div class="section-head">
+      <span class="section-num">7</span>
+      <h2>High-fidelity prototype</h2>
+    </div>
+    <div class="prose">
+      <p>The final prototype delivered a streamlined path from search to confirmed booking, with the customization and review-checking behavior users had asked for built in from the start rather than bolted on.</p>
+    </div>
+    <div class="artifact" style="margin-top:32px;">
+      <div class="artifact-label">Search → doctor detail → confirmed booking</div>
+      <div class="frame">
+        <div class="bp-row"><div class="bp-dot"></div><div class="bp-lines"><div class="bp-bar w60"></div><div class="bp-bar w30"></div></div></div>
+        <div class="bp-row"><div class="bp-dot"></div><div class="bp-lines"><div class="bp-bar accent w80"></div><div class="bp-bar w40"></div></div></div>
+        <div class="bp-row"><div class="bp-dot"></div><div class="bp-lines"><div class="bp-bar gold w60"></div><div class="bp-bar w30"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outcomes -->
+  <section id="outcomes">
+    <div class="section-head">
+      <span class="section-num">8</span>
+      <h2>Outcomes &amp; reflection</h2>
+    </div>
+
+    <div class="quote-block">
+      <blockquote>"It made it so easy and quick to book an appointment" — I'd prefer it over calling.</blockquote>
+      <div class="attribution">Peer usability tester</div>
+    </div>
+
+    <div class="prose">
+      <p><strong>What I'd carry forward:</strong> the clearest lesson from this project is that a component-first approach pays off the moment research surfaces a new need — the recurring-appointment feature was fast to design because the underlying system already existed. That's shaped how I approach every project since: build the reusable pieces early, so late-stage findings become configuration, not redesign.</p>
+    </div>
+
+    <h3 style="font-size:19px; margin-top:44px; margin-bottom:8px;">Next steps, if continued today</h3>
+    <ul class="next-steps">
+      <li>A further round of testing focused specifically on the recurring-appointment and cancellation flows under real emergency conditions, not simulated ones.</li>
+      <li>Extending the component library into a documented, versioned design system usable across future Medlogics products.</li>
+      <li>Auditing the flow against WCAG 2.2 AAA where feasible, given the health-critical context.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <div class="name">Akshatha Suchethan</div>
+    <div class="links">
+      <a href="https://akshatha.in" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://linkedin.com/in/akshathasuchethan/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
