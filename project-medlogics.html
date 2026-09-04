@@ -16,7 +16,7 @@
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,60[...]" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -63,8 +63,7 @@
     color:var(--ink);
   }
 
-  a{color:var(--teal-deep);}
-  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+  a{color:var(--teal-deep);}  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
     outline:2px solid var(--teal);
     outline-offset:3px;
   }
@@ -83,9 +82,7 @@
     animation: rise 0.7s ease-out forwards;
   }
   @keyframes rise{
-    from{opacity:0; transform:translateY(10px);}
-    to{opacity:1; transform:translateY(0);}
-  }
+    from{opacity:0; transform:translateY(10px);}    to{opacity:1; transform:translateY(0);}  }
   @media (prefers-reduced-motion: reduce){
     .hero{animation:none; opacity:1;}
   }
@@ -133,8 +130,7 @@
   }
 
   @media (max-width:720px){
-    .meta-row{grid-template-columns:repeat(2, 1fr); row-gap:20px;}
-    .meta-item:nth-child(2n){border-right:none;}
+    .meta-row{grid-template-columns:repeat(2, 1fr); row-gap:20px;}    .meta-item:nth-child(2n){border-right:none;}
   }
 
   /* ---------- Sections ---------- */
@@ -167,8 +163,7 @@
     font-size:30px;
   }
 
-  .prose p{margin:0 0 18px; max-width:68ch;}
-  .prose p:last-child{margin-bottom:0;}
+  .prose p{margin:0 0 18px; max-width:68ch;}  .prose p:last-child{margin-bottom:0;}
 
   /* two column: rationale beside artifact */
   .split{
@@ -182,8 +177,7 @@
   }
   .split.reverse .artifact{order:-1;}
   @media (max-width:860px){
-    .split, .split.reverse{grid-template-columns:1fr;}
-    .split.reverse .artifact{order:0;}
+    .split, .split.reverse{grid-template-columns:1fr;}    .split.reverse .artifact{order:0;}
   }
 
   /* ---------- Blueprint artifact panels ---------- */
@@ -409,8 +403,7 @@
     margin-left:22px;
     font-size:14.5px;
   }
-  footer .links a:hover{color:var(--teal-deep);}
-  footer .links a:first-child{margin-left:0;}
+  footer .links a:hover{color:var(--teal-deep);}  footer .links a:first-child{margin-left:0;}
 
   ::selection{
     background: var(--teal);
@@ -424,7 +417,7 @@
   <div class="wrap">
     <div class="kicker">Case Study</div>
     <h1>Medlogics — booking a doctor without the hold music</h1>
-    <p class="sub">A healthcare scheduling platform that lets patients search, compare, and book appointments in a few taps — replacing phone queues with a self-service flow built to hold up under real accessibility constraints, not just usability ones.</p>
+    <p class="sub">A healthcare scheduling platform that lets patients search, compare, and book appointments in a few taps — replacing phone queues with a self-service flow built to hold up un[...]
 
     <div class="meta-row">
       <div class="meta-item">
@@ -457,8 +450,8 @@
     </div>
     <div class="split">
       <div class="prose">
-        <p>Booking a doctor's appointment is still, for many patients, a high-friction task: long hold times, no visibility into real-time availability, and no self-service way to cancel or reschedule around a busy, unpredictable day. For working adults with caregiving responsibilities, that friction isn't just an inconvenience — it's a barrier to timely care.</p>
-        <p>The goal was to give patients a fast, trustworthy way to find the right doctor by specialty, symptom, or location; check real-time availability; and book, reschedule, or cancel an appointment in under two minutes — while making sure the experience held up for patients who rely on screen readers, keyboard navigation, or reduced-motion settings.</p>
+        <p>Booking a doctor's appointment is still, for many patients, a high-friction task: long hold times, no visibility into real-time availability, and no self-service way to cancel or reschedule[...]
+        <p>The goal was to give patients a fast, trustworthy way to find the right doctor by specialty, symptom, or location; check real-time availability; and book, reschedule, or cancel an appointme[...]
       </div>
       <div class="artifact">
         <div class="artifact-label">Old path vs. new path</div>
@@ -483,11 +476,11 @@
         <div class="frame">
           <div class="bp-bar w40"></div>
           <div class="bp-bar w60"></div>
-          <p style="font-size:13.5px; color:var(--ink-muted); margin-top:14px; margin-bottom:0;">A working parent with no time to wait in queue for care. Every added step between "I need a doctor" and "appointment confirmed" was a point of drop-off.</p>
+          <p style="font-size:13.5px; color:var(--ink-muted); margin-top:14px; margin-bottom:0;">A working parent with no time to wait in queue for care. Every added step between "I need a doctor" and[...]
         </div>
       </div>
       <div class="prose">
-        <p>I conducted interviews and built empathy maps with working adults managing packed schedules — an audience whose needs are a useful proxy for how any time-constrained user interacts with a booking flow. Research surfaced three consistent pain points beyond "booking is slow."</p>
+        <p>I conducted interviews and built empathy maps with working adults managing packed schedules — an audience whose needs are a useful proxy for how any time-constrained user interacts with a[...]
       </div>
     </div>
 
@@ -524,8 +517,8 @@
     <div class="split">
       <div class="prose">
         <p>Rather than designing screens in isolation, I built a small component library alongside the flows — the piece of this project I now treat as the most reusable asset.</p>
-        <p><strong>Design tokens</strong> for color, spacing, and type scale kept contrast ratios and touch-target sizing consistent across every screen without manual rechecking. <strong>Reusable components</strong> — dropdowns, progress indicators, doctor cards, availability slots — were documented with default, hover, disabled, and error states for clean developer handoff.</p>
-        <p>This system-first approach meant that when usability testing surfaced the need for a new "recurring appointment" option, it could be built from existing components rather than a one-off screen.</p>
+        <p><strong>Design tokens</strong> for color, spacing, and type scale kept contrast ratios and touch-target sizing consistent across every screen without manual rechecking. <strong>Reusable com[...]
+        <p>This system-first approach meant that when usability testing surfaced the need for a new "recurring appointment" option, it could be built from existing components rather than a one-off scr[...]
       </div>
       <div class="artifact">
         <div class="artifact-label">Token &amp; component set</div>
@@ -555,7 +548,7 @@
       <h2>From wireframe to prototype</h2>
     </div>
     <div class="prose">
-      <p>Paper wireframes let me test the core booking logic — location, consultation type, doctor selection — before any visual design work began. Digital wireframes carried that structure forward, with two decisions shaped directly by research: a <strong>location and consultation-type dropdown</strong> surfaced early in the flow, so users could filter before browsing doctors rather than after, and a <strong>progress indicator</strong> giving users a clear sense of how close they were to a confirmed booking.</p>
+      <p>Paper wireframes let me test the core booking logic — location, consultation type, doctor selection — before any visual design work began. Digital wireframes carried that structure forwar[...]
     </div>
     <div class="artifact" style="margin-top:32px;">
       <div class="artifact-label">Primary flow — low-fidelity prototype</div>
@@ -606,7 +599,7 @@
       <h2>Refining the design</h2>
     </div>
     <div class="prose" style="margin-bottom:32px;">
-      <p><strong>Customization:</strong> after Round 1, I surfaced location, care type, and consultation type together on first load, rather than sequentially — cutting the number of screens needed to reach doctor selection. <strong>Trust signals:</strong> after Round 2, I added a doctor detail screen — credentials, specialty, and patient reviews — inserted before the booking confirmation step, so users could evaluate fit without leaving the flow.</p>
+      <p><strong>Customization:</strong> after Round 1, I surfaced location, care type, and consultation type together on first load, rather than sequentially — cutting the number of screens needed [...]
     </div>
     <div class="compare">
       <div class="artifact">
@@ -625,7 +618,7 @@
       </div>
     </div>
     <div class="prose" style="margin-top:40px;">
-      <p><strong>Accessibility pass:</strong> every revised screen was checked against WCAG 2.2 AA — color contrast, focus order, and screen-reader labeling on icon-only actions like bookmarking — rather than treated as a final-stage audit. Detailed doctor imagery included descriptive alt text, and the booking flow was fully operable via keyboard alone.</p>
+      <p><strong>Accessibility pass:</strong> every revised screen was checked against WCAG 2.2 AA — color contrast, focus order, and screen-reader labeling on icon-only actions like bookmarking —[...]
     </div>
   </section>
 
@@ -636,7 +629,7 @@
       <h2>High-fidelity prototype</h2>
     </div>
     <div class="prose">
-      <p>The final prototype delivered a streamlined path from search to confirmed booking, with the customization and review-checking behavior users had asked for built in from the start rather than bolted on.</p>
+      <p>The final prototype delivered a streamlined path from search to confirmed booking, with the customization and review-checking behavior users had asked for built in from the start rather than [...]
     </div>
     <div class="artifact" style="margin-top:32px;">
       <div class="artifact-label">Search → doctor detail → confirmed booking</div>
@@ -661,7 +654,7 @@
     </div>
 
     <div class="prose">
-      <p><strong>What I'd carry forward:</strong> the clearest lesson from this project is that a component-first approach pays off the moment research surfaces a new need — the recurring-appointment feature was fast to design because the underlying system already existed. That's shaped how I approach every project since: build the reusable pieces early, so late-stage findings become configuration, not redesign.</p>
+      <p><strong>What I'd carry forward:</strong> the clearest lesson from this project is that a component-first approach pays off the moment research surfaces a new need — the recurring-appointmen[...]
     </div>
 
     <h3 style="font-size:19px; margin-top:44px; margin-bottom:8px;">Next steps, if continued today</h3>
